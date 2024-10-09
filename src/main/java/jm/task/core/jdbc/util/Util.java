@@ -54,4 +54,8 @@ public class Util{
         }
         return sessionFactory;
     }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
 }

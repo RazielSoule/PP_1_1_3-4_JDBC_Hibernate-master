@@ -3,6 +3,7 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
+import jm.task.core.jdbc.util.Util;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,5 +27,6 @@ public class Main {
         userService.getAllUsers().forEach(x -> System.out.println(x.toString()));
         userService.cleanUsersTable();
         userService.dropUsersTable();
+        Util.shutdown();
     }
 }
