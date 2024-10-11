@@ -1,8 +1,5 @@
 package jm.task.core.jdbc.util;
 
-<<<<<<< Updated upstream
-=======
-import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,18 +9,14 @@ import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
->>>>>>> Stashed changes
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
-<<<<<<< Updated upstream
-public class Util {
-=======
 public class Util{
     private static final Logger logger = LoggerFactory.getLogger(Util.class);
 
->>>>>>> Stashed changes
     static final String DB_DRIVER = "org.postgresql.Driver";
     static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/postgres";
     static final String USER = "postgres";
@@ -35,8 +28,6 @@ public class Util{
         Class.forName(DB_DRIVER);
         return DriverManager.getConnection(DB_URL, USER, PASS);
     }
-<<<<<<< Updated upstream
-=======
 
     //Hibernate
     private static SessionFactory sessionFactory;
@@ -71,5 +62,4 @@ public class Util{
         }
         return sessionFactory;
     }
->>>>>>> Stashed changes
 }

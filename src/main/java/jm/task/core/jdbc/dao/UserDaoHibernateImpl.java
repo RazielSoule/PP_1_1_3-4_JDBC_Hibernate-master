@@ -1,9 +1,7 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-<<<<<<< Updated upstream
 
-=======
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,10 +14,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
->>>>>>> Stashed changes
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -27,9 +21,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-<<<<<<< Updated upstream
-
-=======
         logger.debug("Creating users table using Hibernate");
 
         String sql = "CREATE TABLE IF NOT EXISTS Users" +
@@ -38,26 +29,18 @@ public class UserDaoHibernateImpl implements UserDao {
                 "lastName CHARACTER VARYING(30)," +
                 "age INTEGER)";
         connectAndExecute(sql);
->>>>>>> Stashed changes
     }
 
     @Override
     public void dropUsersTable() {
-<<<<<<< Updated upstream
-
-=======
         logger.debug("Dropping users table using Hibernate");
 
         String sql = "DROP TABLE IF EXISTS Users";
         connectAndExecute(sql);
->>>>>>> Stashed changes
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-<<<<<<< Updated upstream
-
-=======
         logger.debug("Saving user in table using Hibernate");
 
         Transaction transaction = null;
@@ -73,14 +56,10 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("Exception during saving user by id using Hibernate", e);
         }
->>>>>>> Stashed changes
     }
 
     @Override
     public void removeUserById(long id) {
-<<<<<<< Updated upstream
-
-=======
         logger.debug("Removing user from table by id using Hibernate");
 
         Transaction transaction = null;
@@ -94,14 +73,10 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("Exception during removing user by id using Hibernate", e);
         }
->>>>>>> Stashed changes
     }
 
     @Override
     public List<User> getAllUsers() {
-<<<<<<< Updated upstream
-        return null;
-=======
         logger.debug("Get all users from table using Hibernate");
 
         try (SessionFactory sessionFactory = Util.getSessionFactory();
@@ -117,14 +92,10 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("Exception during getting list of all users using Hibernate", e);
         }
->>>>>>> Stashed changes
     }
 
     @Override
     public void cleanUsersTable() {
-<<<<<<< Updated upstream
-
-=======
         logger.debug("Cleaning users table using Hibernate");
 
         Transaction transaction = null;
@@ -149,6 +120,5 @@ public class UserDaoHibernateImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("Exception when not parametrized sql call using Hibernate", e);
         }
->>>>>>> Stashed changes
     }
 }
