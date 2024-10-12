@@ -32,27 +32,28 @@ public class Util{
     //Hibernate
     private static SessionFactory sessionFactory;
 
+    private static final Properties settings = new Properties();
+
+    static {
+        settings.put(Environment.DRIVER, DB_DRIVER);
+        settings.put(Environment.URL, DB_URL);
+        settings.put(Environment.USER, USER);
+        settings.put(Environment.PASS, PASS);
+        settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+
+        settings.put(Environment.SHOW_SQL, "true");
+
+        settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+
+        settings.put(Environment.HBM2DDL_AUTO, "");
+    }
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             logger.debug("Connecting to DB using Hibernate");
 
             Configuration configuration = new Configuration();
-
-            Properties settings = new Properties();
-            settings.put(Environment.DRIVER, DB_DRIVER);
-            settings.put(Environment.URL, DB_URL);
-            settings.put(Environment.USER, USER);
-            settings.put(Environment.PASS, PASS);
-            settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
-
-            settings.put(Environment.SHOW_SQL, "true");
-
-            settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
-            settings.put(Environment.HBM2DDL_AUTO, "");
-
             configuration.setProperties(settings);
-
             configuration.addAnnotatedClass(User.class);
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

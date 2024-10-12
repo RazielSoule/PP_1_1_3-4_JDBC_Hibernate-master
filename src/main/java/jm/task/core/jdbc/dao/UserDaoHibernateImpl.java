@@ -4,7 +4,6 @@ import jm.task.core.jdbc.model.User;
 
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +46,7 @@ public class UserDaoHibernateImpl implements UserDao {
         if (name == null || lastName == null) {
             throw new NullPointerException("Saving user without name or last name using Hibernate");
         }
-        try (SessionFactory sessionFactory = Util.getSessionFactory();
-             Session session = sessionFactory.openSession()) {
-
+        try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(new User(name, lastName, age));
             transaction.commit();
@@ -63,8 +60,7 @@ public class UserDaoHibernateImpl implements UserDao {
         logger.debug("Removing user from table by id using Hibernate");
 
         Transaction transaction = null;
-        try (SessionFactory sessionFactory = Util.getSessionFactory();
-             Session session = sessionFactory.openSession()) {
+        try (Session session = Util.getSessionFactory().openSession()) {
 
             transaction = session.beginTransaction();
             User user = session.get(User.class, id);
@@ -79,9 +75,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public List<User> getAllUsers() {
         logger.debug("Get all users from table using Hibernate");
 
-        try (SessionFactory sessionFactory = Util.getSessionFactory();
-             Session session = sessionFactory.openSession()) {
-
+        try (Session session = Util.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
             Root<User> rootEntry = criteriaQuery.from(User.class);
@@ -99,10 +93,15 @@ public class UserDaoHibernateImpl implements UserDao {
         logger.debug("Cleaning users table using Hibernate");
 
         Transaction transaction = null;
-        try (SessionFactory sessionFactory = Util.getSessionFactory();
-             Session session = sessionFactory.openSession()) {
+        try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createCriteria(User.class).list().forEach(session::delete);
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> rootEntry = criteriaQuery.from(User.class);
+            CriteriaQuery<User> all = criteriaQuery.select(rootEntry);
+
+            TypedQuery<User> allQuery = session.createQuery(all);
+            allQuery.getResultList().forEach(session::delete);
             transaction.commit();
         } catch (Exception e) {
             throw new RuntimeException("Exception during cleaning users table using Hibernate", e);
@@ -111,8 +110,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     private void connectAndExecute(String sql) {
         Transaction transaction = null;
-        try (SessionFactory sessionFactory = Util.getSessionFactory();
-             Session session = sessionFactory.openSession()) {
+        try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery(sql).addEntity(User.class);
             query.executeUpdate();
